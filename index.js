@@ -16,3 +16,29 @@ function processFile(filePath, outputPath) {
         process.exit(1);
     }
 }
+
+function markdownToHTML(markdownText) {
+    function escapeHTML(text) {
+        return text.replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    const bold = /\*\*(.*?)\*\*/g;
+    markdownText = markdownText.replace(bold, '<strong>$1</strong>');
+
+    const italic = /_(.*?)_/g;
+    markdownText = markdownText.replace(italic, '<em>$1</em>');
+
+    const preformatted = /```([^`]+)```/g;
+    markdownText = markdownText.replace(preformatted, '<pre>$1</pre>');
+
+    const monospaced = /`([^`]+)`/g;
+    markdownText = markdownText.replace(monospaced, '<code>$1</code>');
+
+    markdownText = markdownText.replace(/\n/g, '<br>');
+
+    return markdownText;
+}
