@@ -42,3 +42,13 @@ function markdownToHTML(markdownText) {
 
     return markdownText;
 }
+const args = process.argv.slice(2);
+const inputFile = args[0];
+const outputFile = args[1];
+
+if (!inputFile) {
+    console.error('No path provided');
+    process.exit(1);
+}
+
+processFile(inputFile, outputFile);
